@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Buku Tamu Digital</title>
+  @vite(['resources/css/app.css', 'resources/js/app.js'])
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            poppins: ['Poppins', 'sans-serif'],
+          },
+          keyframes: {
+            blob: {
+              '0%': { transform: 'translate(0px, 0px) scale(1)' },
+              '33%': { transform: 'translate(30px, -50px) scale(1.1)' },
+              '66%': { transform: 'translate(-20px, 20px) scale(0.9)' },
+              '100%': { transform: 'translate(0px, 0px) scale(1)' },
+            },
+            'fade-in-up': {
+              from: {
+                opacity: '0',
+                transform: 'translateY(30px)',
+              },
+              to: {
+                opacity: '1',
+                transform: 'translateY(0)',
+              },
+            },
+          },
+          animation: {
+            blob: 'blob 7s infinite',
+            'fade-in-up': 'fade-in-up 0.8s ease-out forwards',
+          },
+        },
+      },
+    }
+  </script>
+</head>
+<body class="bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-800 font-['Poppins'] text-gray-100 min-h-screen relative overflow-x-hidden">
+  <!-- Background Animation -->
+  <div class="absolute inset-0 overflow-hidden pointer-events-none">
+    <div class="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-br from-blue-400 to-purple-600 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob"></div>
+    <div class="absolute -bottom-40 -left-40 w-80 h-80 bg-gradient-to-br from-pink-400 to-red-600 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-2000"></div>
+    <div class="absolute top-40 left-40 w-80 h-80 bg-gradient-to-br from-yellow-400 to-pink-600 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-4000"></div>
+  </div>
+
+  <!-- Header -->
+  <header class="relative z-10 backdrop-blur-lg bg-white/10 border-b border-white/20 shadow-2xl">
+    <div class="container mx-auto px-6 py-12 text-center">
+      <div class="animate-fade-in-up">
+        <div class="inline-block p-4 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full mb-6 shadow-2xl transform hover:scale-110 transition-transform duration-300">
+          <i class="fas fa-book-open text-4xl text-white"></i>
+        </div>
+        <h1 class="text-5xl md:text-7xl font-bold bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent mb-4 tracking-tight">
+          Buku Tamu Digital
+        </h1>
+        <p class="text-xl md:text-2xl text-blue-200 font-light max-w-2xl mx-auto leading-relaxed">
+          Tinggalkan jejak digital Anda dengan pesan yang berkesan 
+          <span class="inline-block animate-bounce">✨</span>
+        </p>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="relative z-10 container mx-auto px-6 py-16">
+    <!-- Call to Action -->
+    <div class="text-center mb-16 animate-fade-in-up animation-delay-500">
+      <a href="/guests/create" class="inline-flex items-center px-8 py-4 bg-gradient-to-r from-blue-500 via-purple-600 to-pink-500 text-white font-semibold text-lg rounded-full shadow-2xl hover:shadow-blue-500/25 transition-all duration-300 transform hover:scale-105 hover:-translate-y-1">
+        <i class="fas fa-feather-alt mr-3 text-xl"></i>
+        Tulis Pesan Berkesan
+        <i class="fas fa-arrow-right ml-3"></i>
+      </a>
+      <p class="text-blue-200 mt-4 text-sm opacity-80">Bagikan pengalaman dan kesan terbaik Anda</p>
+    </div>
+
+    <!-- Guest Messages -->
+    @if(guests.length === 0)
+      <div class="text-center py-20 animate-fade-in-up animation-delay-1500">
+        <div class="inline-block p-8 backdrop-blur-lg bg-white/10 rounded-full mb-8 border border-white/20 shadow-2xl">
+          <i class="fas fa-comment-dots text-6xl text-blue-300"></i>
+        </div>
+        <h2 class="text-3xl font-bold text-white mb-4">Belum Ada Pesan</h2>
+        <p class="text-blue-200 text-lg max-w-md mx-auto leading-relaxed">
+          Jadilah yang pertama meninggalkan kesan dan pesan berkesan di buku tamu digital ini
+        </p>
+        <div class="mt-8">
+          <a href="/guests/create" class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-purple-500 to-pink-500 text-white font-medium rounded-full hover:from-purple-600 hover:to-pink-600 transition-all duration-300 transform hover:scale-105">
+            <i class="fas fa-plus mr-2"></i>
+            Mulai Menulis
+          </a>
+        </div>
+      </div>
+    @else
+      <!-- Filter & Sort -->
+    <!-- Centered Title -->
+    <div class="text-center mb-12 animate-fade-in-up animation-delay-1500">
+      <h2 class="text-3xl font-bold text-white inline-block">
+        <i class="fas fa-comments mr-3 text-blue-400"></i>
+        Pesan dari Pengunjung
+      </h2>
+    </div>
+
+      <!-- Messages Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 animate-fade-in-up animation-delay-2000">
+        @each(guest in guests)
+          <div class="backdrop-blur-lg bg-white/10 rounded-2xl p-6 border border-white/20 shadow-xl hover:bg-white/20 hover:border-white/30 transition-all duration-300 transform hover:-translate-y-2 hover:shadow-2xl">
+            
+            <!-- Header Card -->
+            <div class="flex justify-between items-start mb-4">
+              <div class="flex items-center space-x-3">
+                <div class="w-12 h-12 bg-gradient-to-br from-blue-400 to-purple-500 rounded-full flex items-center justify-center shadow-lg">
+                  <i class="fas fa-user text-white text-lg"></i>
+                </div>
+                <div>
+                  <h3 class="text-xl font-bold text-white">{{ guest.name }}</h3>
+                  <p class="text-blue-200 text-sm opacity-80">
+                    <i class="fas fa-clock mr-1"></i>
+                    {{ guest.createdAt.toFormat('dd MMM yyyy') }}
+                  </p>
+                </div>
+              </div>
+              
+              <!-- Rating Stars -->
+              <div class="flex items-center space-x-1">
+                <i class="fas fa-star text-yellow-400 text-sm drop-shadow-lg"></i>
+                 <p class="text-2xl font-bold text-white mb-1">{{ guest.rating }}/5</p>
+              </div>
+            </div>
+
+            <!-- Message Preview -->
+            <div class="relative">
+              <div class="bg-gradient-to-br from-white/5 to-white/10 rounded-xl p-4 border border-white/10">
+                <p class="text-white/90 leading-relaxed">
+                  {{ guest.message.length > 150 ? guest.message.substring(0, 150) + '...' : guest.message }}
+                </p>
+              </div>
+              
+              @if(guest.message.length > 150)
+                <div class="mt-4 text-center">
+                  <a href="/guests/{{ guest.id }}" class="inline-flex items-center px-4 py-2 bg-gradient-to-r from-blue-500 to-purple-500 text-white text-sm font-medium rounded-full hover:from-blue-600 hover:to-purple-600 transition-all duration-300 transform hover:scale-105 shadow-lg">
+                    <i class="fas fa-expand-alt mr-2"></i>
+                    Baca Selengkapnya
+                  </a>
+                </div>
+              @endif
+            </div>
+
+            <!-- Interaction Buttons -->
+            <div class="flex justify-between items-center mt-6 pt-4 border-t border-white/10">
+              <div class="flex items-center space-x-4 text-sm text-blue-200">
+                <button onclick="likeMessage('{{ guest.id }}')" class="flex items-center space-x-1 hover:text-red-400 transition-colors duration-300">
+                  <i class="far fa-heart"></i>
+                  <span id="like-count-{{ guest.id }}">0</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        @endeach
+      </div>
+    @endif
+  </main>
+
+  <!-- Footer -->
+  <footer class="relative z-10 backdrop-blur-lg bg-white/5 border-t border-white/10 py-12 mt-20">
+    <div class="container mx-auto px-6 text-center">
+      <div class="flex flex-col md:flex-row justify-between items-center">
+        <div class="mb-4 md:mb-0">
+          <p class="text-blue-200 font-light">
+            © 2025 Buku Tamu Digital – Dibuat dengan 
+            <i class="fas fa-heart text-red-400 mx-1 animate-pulse"></i> 
+          </p>
+        </div>
+        <div class="flex items-center space-x-6">
+          <a href="#" class="text-blue-300 hover:text-white transition-colors duration-300">
+            <i class="fab fa-github text-xl"></i>
+          </a>
+          <a href="#" class="text-blue-300 hover:text-white transition-colors duration-300">
+            <i class="fab fa-twitter text-xl"></i>
+          </a>
+          <a href="#" class="text-blue-300 hover:text-white transition-colors duration-300">
+            <i class="fab fa-instagram text-xl"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <style>
+    @keyframes blob {
+      0% { transform: translate(0px, 0px) scale(1); }
+      33% { transform: translate(30px, -50px) scale(1.1); }
+      66% { transform: translate(-20px, 20px) scale(0.9); }
+      100% { transform: translate(0px, 0px) scale(1); }
+    }
+    
+    @keyframes fade-in-up {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    .animate-blob {
+      animation: blob 7s infinite;
+    }
+    
+    .animate-fade-in-up {
+      animation: fade-in-up 0.8s ease-out forwards;
+    }
+    
+    .animation-delay-500 {
+      animation-delay: 0.5s;
+    }
+    
+    .animation-delay-1000 {
+      animation-delay: 1s;
+    }
+    
+    .animation-delay-1500 {
+      animation-delay: 1.5s;
+    }
+    
+    .animation-delay-2000 {
+      animation-delay: 2s;
+    }
+    
+    .animation-delay-2500 {
+      animation-delay: 2.5s;
+    }
+    
+    .animation-delay-4000 {
+      animation-delay: 4s;
+    }
+  </style>
+
+  <script>
+    // Sorting functionality
+    document.getElementById('sortSelect').addEventListener('change', function() {
+      const sortValue = this.value;
+      // In a real app, this would trigger a server request or client-side sorting
+      console.log(`Mengurutkan berdasarkan: ${this.options[this.selectedIndex].text}`);
+      // You would implement actual sorting logic here
+    });
+
+// Like functionality
+function likeMessage(guestId) {
+  const likeCountElement = document.getElementById(`like-count-${guestId}`);
+  const heartIcon = likeCountElement.previousElementSibling;
+  
+  // Toggle like state
+  if (heartIcon.classList.contains('far')) {
+    heartIcon.classList.remove('far');
+    heartIcon.classList.add('fas', 'text-red-500');
+    likeCountElement.textContent = parseInt(likeCountElement.textContent) + 1;
+    
+    // Update total visitors count (example)
+    totalVisitorsElement.textContent = parseInt(totalVisitorsElement.textContent) + 1;
+  } else {
+    heartIcon.classList.remove('fas', 'text-red-500');
+    heartIcon.classList.add('far');
+    likeCountElement.textContent = parseInt(likeCountElement.textContent) - 1;
+    
+    // Update total visitors count (example)
+    totalVisitorsElement.textContent = parseInt(totalVisitorsElement.textContent) - 1;
+  }
+  
+  // Save to localStorage
+  localStorage.setItem(`like-${guestId}`, likeCountElement.textContent);
+  
+  // Add animation
+  heartIcon.style.transform = 'scale(1.3)';
+  setTimeout(() => {
+    heartIcon.style.transform = 'scale(1)';
+  }, 300);
+}
+
+    document.addEventListener('DOMContentLoaded', () => {
+  // Initialize likes
+  document.querySelectorAll('[id^="like-count-"]').forEach(element => {
+    const guestId = element.id.split('-')[2];
+    const savedLike = localStorage.getItem(`like-${guestId}`);
+    if (savedLike) {
+      element.textContent = savedLike;
+      if (parseInt(savedLike) > 0) {
+        const heartIcon = element.previousElementSibling;
+        heartIcon.classList.remove('far');
+        heartIcon.classList.add('fas', 'text-red-500');
+      }
+    }
+  });
+
+  const savedTotalLikes = localStorage.getItem('total-likes');
+  if (savedTotalLikes) {
+    document.getElementById('total-likes').textContent = savedTotalLikes;
+  }
+}); 
+  </script>
+</body>
+</html>

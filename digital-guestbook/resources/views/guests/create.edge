@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tulis Pesan | Buku Tamu Digital</title>
+  @vite(['resources/css/app.css', 'resources/js/app.js'])
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+</head>
+<body class="bg-gradient-to-br from-violet-900 via-purple-900 to-indigo-900 font-['Poppins'] text-gray-100 min-h-screen relative overflow-x-hidden">
+
+  <!-- Navigation -->
+  <nav class="relative z-10 backdrop-blur-lg bg-white/5 border-b border-white/10 shadow-2xl">
+    <div class="container mx-auto px-6 py-4">
+      <div class="flex items-center justify-between">
+        <a href="/guests" class="flex items-center space-x-3 text-white hover:text-blue-300 transition-colors duration-300 group">
+          <div class="p-2 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg group-hover:from-blue-600 group-hover:to-purple-700 transition-all duration-300">
+            <i class="fas fa-arrow-left text-lg"></i>
+          </div>
+          <span class="font-medium">Kembali ke Beranda</span>
+        </a>
+        <div class="text-right">
+          <h1 class="text-xl font-semibold text-white">Buku Tamu Digital</h1>
+          <p class="text-sm text-blue-200 opacity-80">Form Pesan Baru</p>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="relative z-10 container mx-auto px-6 py-16">
+    <div class="max-w-2xl mx-auto">
+      
+      <!-- Header Section -->
+      <div class="text-center mb-12">
+        <h2 class="text-4xl md:text-5xl font-bold bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent mb-4">
+          Tulis Pesan Berkesan
+        </h2>
+        <p class="text-xl text-blue-200 font-light max-w-lg mx-auto leading-relaxed">
+          Bagikan pengalaman dan kesan terbaik Anda untuk menginspirasi pengunjung lainnya
+        </p>
+      </div>
+
+      <!-- Form Container -->
+      <div class="backdrop-blur-lg bg-white/10 rounded-3xl p-8 md:p-12 shadow-2xl border border-white/20">
+        <form action="/guests" method="POST" class="space-y-8" id="guestForm">
+          {{ csrfField() }}
+
+          <!-- Name Field -->
+          <div class="group">
+            <label for="name" class="block font-medium text-white mb-3">
+              <i class="fas fa-signature mr-2 text-blue-400"></i>
+              Nama Lengkap *
+            </label>
+            <input 
+              type="text" 
+              name="name" 
+              id="name" 
+              required 
+              class="w-full p-4 backdrop-blur-lg bg-white/10 border border-white/30 rounded-xl text-white placeholder-blue-200/70 focus:ring-2 focus:ring-blue-400 focus:border-blue-400 focus:bg-white/20 transition-all duration-300" 
+              placeholder="Masukkan nama lengkap Anda"
+            >
+          </div>
+
+          <!-- Email Field -->
+          <div class="group">
+            <label for="email" class="block font-medium text-white mb-3">
+              <i class="fas fa-envelope mr-2 text-green-400"></i>
+              Alamat Email *
+            </label>
+            <input 
+              type="email" 
+              name="email" 
+              id="email" 
+              required 
+              class="w-full p-4 backdrop-blur-lg bg-white/10 border border-white/30 rounded-xl text-white placeholder-blue-200/70 focus:ring-2 focus:ring-green-400 focus:border-green-400 focus:bg-white/20 transition-all duration-300" 
+              placeholder="contoh@email.com"
+            >
+          </div>
+
+          <!-- Phone Field -->
+          <div class="group">
+            <label for="phone" class="block font-medium text-white mb-3">
+              <i class="fas fa-phone mr-2 text-yellow-400"></i>
+              Nomor Telepon (opsional)
+            </label>
+            <input 
+              type="tel" 
+              name="phone" 
+              id="phone" 
+              class="w-full p-4 backdrop-blur-lg bg-white/10 border border-white/30 rounded-xl text-white placeholder-blue-200/70 focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 focus:bg-white/20 transition-all duration-300" 
+              placeholder="+62"
+            >
+          </div>
+<!-- Rating Section -->
+          <div class="rating-container">
+            <label class="block font-medium text-white mb-3">
+              <i class="fas fa-star mr-2 text-yellow-400"></i>
+              Berikan Rating (1-5)
+            </label>
+            <div class="flex items-center space-x-2 mb-4" id="rating-stars">
+              <input type="radio" name="rating" value="1" id="rating1" class="hidden" />
+              <label for="rating1" class="cursor-pointer text-3xl transition-all duration-300 hover:scale-125 block text-gray-400 hover:text-yellow-400">
+                <i class="fas fa-star drop-shadow-lg"></i>
+              </label>
+              
+              <input type="radio" name="rating" value="2" id="rating2" class="hidden" />
+              <label for="rating2" class="cursor-pointer text-3xl transition-all duration-300 hover:scale-125 block text-gray-400 hover:text-yellow-400">
+                <i class="fas fa-star drop-shadow-lg"></i>
+              </label>
+              
+              <input type="radio" name="rating" value="3" id="rating3" class="hidden" />
+              <label for="rating3" class="cursor-pointer text-3xl transition-all duration-300 hover:scale-125 block text-gray-400 hover:text-yellow-400">
+                <i class="fas fa-star drop-shadow-lg"></i>
+              </label>
+              
+              <input type="radio" name="rating" value="4" id="rating4" class="hidden" />
+              <label for="rating4" class="cursor-pointer text-3xl transition-all duration-300 hover:scale-125 block text-gray-400 hover:text-yellow-400">
+                <i class="fas fa-star drop-shadow-lg"></i>
+              </label>
+              
+              <input type="radio" name="rating" value="5" id="rating5" class="hidden" checked />
+              <label for="rating5" class="cursor-pointer text-3xl transition-all duration-300 hover:scale-125 block text-gray-400 hover:text-yellow-400">
+                <i class="fas fa-star drop-shadow-lg"></i>
+              </label>
+            </div>
+            <div class="text-center">
+              <span class="text-blue-200 text-sm">Rating Anda: </span>
+              <span id="rating-display" class="text-yellow-400 font-semibold">5 bintang</span>
+            </div>
+          </div>
+
+          <!-- Message Section -->
+          <div class="group">
+            <label for="message" class="block font-medium text-white mb-3">
+              <i class="fas fa-pen mr-2 text-green-400"></i>
+              Tulis Pesan Anda *
+            </label>
+            <textarea 
+              name="message" 
+              id="message" 
+              rows="6" 
+              required 
+              class="w-full p-4 backdrop-blur-lg bg-white/10 border border-white/30 rounded-xl text-white placeholder-blue-200/70 focus:ring-2 focus:ring-green-400 focus:border-green-400 focus:bg-white/20 transition-all duration-300 resize-none" 
+              placeholder="Ceritakan pengalaman, kesan, atau pesan Anda di sini..."
+              maxlength="500"
+            ></textarea>
+            <div class="text-right text-sm text-blue-200" id="char-counter">
+              <span id="char-count">0</span>/500 karakter
+            </div>
+          </div>
+
+          <!-- Submit Button -->
+          <div class="pt-6">
+            <button 
+              type="submit" 
+              class="w-full py-4 bg-gradient-to-r from-blue-500 via-purple-600 to-pink-500 text-white font-bold text-lg rounded-xl shadow-2xl hover:shadow-blue-500/25 transition-all duration-300 transform hover:scale-105 hover:-translate-y-1"
+            >
+              <i class="fas fa-paper-plane mr-3"></i>
+              Kirim Pesan Berkesan
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="relative z-10 backdrop-blur-lg bg-white/5 border-t border-white/10 py-8 mt-20">
+    <div class="container mx-auto px-6 text-center">
+      <p class="text-blue-200 font-light">
+        © 2025 Buku Tamu Digital – Dibuat dengan 
+        <i class="fas fa-heart text-red-400 mx-1 animate-pulse"></i> 
+      </p>
+    </div>
+  </footer>
+
+  <script>
+    // Initialize rating stars
+    document.addEventListener('DOMContentLoaded', function() {
+      const ratingInputs = document.querySelectorAll('input[name="rating"]');
+      const ratingLabels = document.querySelectorAll('#rating-stars label');
+      const ratingDisplay = document.getElementById('rating-display');
+      
+      // Set initial rating (5 stars by default)
+      updateRatingStars(5);
+      
+      // Add event listeners for rating stars
+      ratingInputs.forEach(input => {
+        input.addEventListener('change', function() {
+          updateRatingStars(parseInt(this.value));
+        });
+      });
+      
+      // Function to update star colors and display
+      function updateRatingStars(rating) {
+        ratingLabels.forEach((label, index) => {
+          if (index < rating) {
+            label.classList.add('text-yellow-400');
+            label.classList.remove('text-gray-400');
+          } else {
+            label.classList.add('text-gray-400');
+            label.classList.remove('text-yellow-400');
+          }
+        });
+        
+        // Update rating display text
+        const ratingTexts = {
+          1: '1 bintang - Kurang',
+          2: '2 bintang - Cukup',
+          3: '3 bintang - Baik',
+          4: '4 bintang - Sangat Baik',
+          5: '5 bintang - Luar Biasa'
+        };
+        ratingDisplay.textContent = ratingTexts[rating] || '5 bintang - Luar Biasa';
+      }
+    });
+
+    // Character counter for message textarea
+    document.getElementById('message').addEventListener('input', function() {
+      const current = this.value.length;
+      document.getElementById('char-count').textContent = current;
+      
+      if (current > 450) {
+        document.getElementById('char-counter').classList.add('text-yellow-400');
+      } else {
+        document.getElementById('char-counter').classList.remove('text-yellow-400');
+      }
+    });
+
+    // Form validation
+    document.getElementById('guestForm').addEventListener('submit', function(e) {
+      const name = document.getElementById('name').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const message = document.getElementById('message').value.trim();
+      
+      if (!name || !email || !message) {
+        e.preventDefault();
+        showNotification('Mohon lengkapi semua field yang wajib diisi!', 'red');
+        return false;
+      }
+      
+      if (!validateEmail(email)) {
+        e.preventDefault();
+        showNotification('Mohon masukkan alamat email yang valid!', 'red');
+        return false;
+      }
+      
+      showNotification('Pesan Anda berhasil dikirim!', 'green');
+      return true;
+    });
+
+    function validateEmail(email) {
+      const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      return re.test(email);
+    }
+
+    function showNotification(message, color = 'green') {
+      const notification = document.createElement('div');
+      notification.className = `fixed bottom-6 right-6 bg-${color}-600 text-white px-6 py-3 rounded-full shadow-lg font-medium animate-fadeIn z-50`;
+      notification.textContent = message;
+      document.body.appendChild(notification);
+      
+      setTimeout(() => {
+        notification.classList.add('animate-fadeOut');
+        setTimeout(() => {
+          notification.remove();
+        }, 300);
+      }, 4000);
+    }
+
+    // Helper function for initial rating update
+    function updateRatingStars(rating) {
+      const ratingLabels = document.querySelectorAll('#rating-stars label');
+      const ratingDisplay = document.getElementById('rating-display');
+      
+      ratingLabels.forEach((label, index) => {
+        if (index < rating) {
+          label.classList.add('text-yellow-400');
+          label.classList.remove('text-gray-400');
+        } else {
+          label.classList.add('text-gray-400');
+          label.classList.remove('text-yellow-400');
+        }
+      });
+      
+      const ratingTexts = {
+        1: '1 bintang - Kurang',
+        2: '2 bintang - Cukup', 
+        3: '3 bintang - Baik',
+        4: '4 bintang - Sangat Baik',
+        5: '5 bintang - Luar Biasa'
+      };
+      
+      if (ratingDisplay) {
+        ratingDisplay.textContent = ratingTexts[rating] || '5 bintang - Luar Biasa';
+      }
+    }
+  </script>
+
+  <style>
+    /* Animations */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    @keyframes fadeOut {
+      from { opacity: 1; transform: translateY(0); }
+      to { opacity: 0; transform: translateY(10px); }
+    }
+    
+    .animate-fadeIn {
+      animation: fadeIn 0.3s ease-out forwards;
+    }
+    
+    .animate-fadeOut {
+      animation: fadeOut 0.3s ease-out forwards;
+    }
+
+    /* Star hover effects */
+    #rating-stars label:hover {
+      transform: scale(1.1);
+    }
+
+    #rating-stars label i {
+      transition: all 0.3s ease;
+    }
+  </style>
+</body>
+</html>
